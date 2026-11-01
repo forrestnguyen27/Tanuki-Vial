@@ -8,6 +8,11 @@
 #define _GL 3
 #define _BK 4
 
+enum custom_keycodes {
+  TANUKI_RGB_TOGGLE = SAFE_RANGE,
+  TANUKI_LAYER_BLOCK
+};
+
 
 //other variables
 int mCalled = 0;
@@ -26,12 +31,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,   KC_F11,  KC_F12,\
   KC_1,     KC_2,     KC_3,     KC_4,     KC_5,     KC_6,     KC_7,     KC_8,     KC_9,     KC_0,    KC_TRNS,\
   KC_TRNS,  KC_PSCR,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  \
-  KC_TRNS,  KC_F1,    KC_TRNS,  RESET,    KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,  KC_TRNS),
+  KC_TRNS,  KC_F1,    KC_TRNS,  QK_BOOT,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,  KC_TRNS),
 
 [_UL] = LAYOUT(
   KC_LBRC,  KC_RBRC,  KC_LCBR,  KC_RCBR,  KC_PIPE,  KC_BSLS,  KC_PLUS,  KC_UNDS,  KC_MINS,  KC_EQL,  KC_DEL,\
   KC_EXLM,  KC_AT,    KC_HASH,  KC_DLR,   KC_PERC,  KC_CIRC,  KC_AMPR,  KC_ASTR,  KC_LPRN,  KC_RPRN, KC_TRNS, \
-  KC_TRNS,  KC_FN0,   RGB_TOG,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  RGB_SAD,  RGB_VAD,  KC_TRNS,  KC_TRNS,  \
+  KC_TRNS,  TANUKI_RGB_TOGGLE, RGB_TOG,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  RGB_SAD,  RGB_VAD,  KC_TRNS,  KC_TRNS,  \
   KC_TRNS,  KC_GRV,   KC_TRNS,  RGB_MOD,  RGB_HUI,  KC_TRNS,  KC_TRNS,            RGB_SAI,  RGB_VAI),
 
 [_GL] = LAYOUT(
@@ -44,7 +49,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,\
   KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,\
   KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_NO,    KC_NO,    KC_TRNS,  KC_TRNS,  \
-  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_NO,    KC_NO,    KC_TRNS,  KC_FN1,  KC_NO,    KC_NO),
+  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_NO,    KC_NO,    KC_TRNS,  TANUKI_LAYER_BLOCK,  KC_NO,    KC_NO),
 
 };
 
@@ -62,7 +67,7 @@ bool toggleLayerRGB(void){
 
 void matrix_init_user(void){
 	rgblight_enable();
-  	rgblight_mode(1);
+		rgblight_mode(1);
 	rgblight_sethsv(0,10,255);
 }
 
@@ -118,11 +123,11 @@ bool process_record_user (uint16_t keycode, keyrecord_t *record) {
   //uncommenting the line below causes the lights to flicker when typing on the keyboard.
   //rgblight_sethsv(0,255,0);
 
-	if(keycode == KC_FN0 && record->event.pressed){
+	if(keycode == TANUKI_RGB_TOGGLE && record->event.pressed){
 		//set the toggle and make sure to set the colour back to white
 		lRGB = toggleLayerRGB();
 		rgblight_enable();
-  		rgblight_mode(1);
+		rgblight_mode(1);
 		rgblight_sethsv(0,255,255);
 		layer_state =0x00000000;
 
@@ -130,7 +135,7 @@ bool process_record_user (uint16_t keycode, keyrecord_t *record) {
 	}
 
 	//check if spacebar is released when on a different layer
-	if(keycode == KC_FN1){
+	if(keycode == TANUKI_LAYER_BLOCK){
 		if(record ->event.pressed){
 		}else{
 		blockToggle = true;
