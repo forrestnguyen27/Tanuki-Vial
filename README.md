@@ -1,6 +1,16 @@
 # Tanuki 40% keyboard
 ### The trash panda 40%
 
+## Tanuki Vial firmware
+
+This repository is a Tanuki keyboard project fork that adds Vial-compatible firmware for the **Tanuki PCB with an ATmega32U4 Arduino Pro Micro**. It is not a full QMK or Vial-QMK source fork: the Tanuki-specific firmware source is in [`Firmware/QMK_files`](Firmware/QMK_files), and it is built inside a separate [Vial-QMK](https://github.com/vial-kb/vial-qmk) checkout.
+
+- **Prebuilt firmware:** [`Firmware/tanuki_vial_pro_micro.hex`](Firmware/tanuki_vial_pro_micro.hex)
+- **Build and Pro Micro flashing instructions:** [`Firmware/README.md`](Firmware/README.md)
+- **Tanuki keyboard source and Vial keymap:** [`Firmware/QMK_files`](Firmware/QMK_files)
+
+The firmware retains the Tanuki layer behavior and underglow controls. Vial can remap the keys and layers; its RGB settings panel is not enabled. To unlock Vial's protected settings, hold **Tab + Escape** and select **Security → Unlock**. The firmware is sized for the Caterina bootloader commonly supplied with Pro Micros.
+
 ![Tanuki](https://github.com/SethSenpai/Tanuki/blob/master/Img/glamour1.jpg?raw=true)
 
 #### What is the Tanuki?
